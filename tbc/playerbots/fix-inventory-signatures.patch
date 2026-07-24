@@ -1,0 +1,79 @@
+diff --git a/playerbot/strategy/actions/BankAction.cpp b/playerbot/strategy/actions/BankAction.cpp
+index dbedd7a4..58a5bbd9 100644
+--- a/playerbot/strategy/actions/BankAction.cpp
++++ b/playerbot/strategy/actions/BankAction.cpp
+@@ -105,7 +105,7 @@ bool BankAction::Withdraw(Player* requester, const uint32 itemid)
+     ResetBankActionItemCaches(ai, itemId, itemQualifier);
+ 
+     ItemPosCountVec dest;
+-#ifdef MANGOSBOT_TWO
++#if defined(MANGOSBOT_ONE) || defined(MANGOSBOT_TWO)
+     uint8 bagSlot;
+     InventoryResult msg = bot->CanStoreItem(NULL_BAG, NULL_SLOT, dest, pItem, bagSlot, false);
+ #else
+@@ -143,7 +143,7 @@ bool BankAction::Deposit(Player* requester, Item* pItem)
+     ResetBankActionItemCaches(ai, itemId, itemQualifier);
+ 
+     ItemPosCountVec dest;
+-#ifdef MANGOSBOT_TWO
++#if defined(MANGOSBOT_ONE) || defined(MANGOSBOT_TWO)
+     uint8 bagSlot;
+     InventoryResult msg = bot->CanBankItem(NULL_BAG, NULL_SLOT, dest, pItem, false, bagSlot);
+ #else
+@@ -274,7 +274,7 @@ bool BankAction::AutoDeposit()
+             continue;
+ 
+         ItemPosCountVec dest;
+-#ifdef MANGOSBOT_TWO
++#if defined(MANGOSBOT_ONE) || defined(MANGOSBOT_TWO)
+         uint8 bagSlot;
+         InventoryResult msg = bot->CanBankItem(NULL_BAG, NULL_SLOT, dest, item, false, bagSlot);
+ #else
+@@ -316,7 +316,7 @@ bool BankAction::AutoWithdraw()
+             return false;        
+ 
+         ItemPosCountVec dest;
+-#ifdef MANGOSBOT_TWO
++#if defined(MANGOSBOT_ONE) || defined(MANGOSBOT_TWO)
+         uint8 bagSlot;
+         InventoryResult msg = bot->CanStoreItem(NULL_BAG, NULL_SLOT, dest, pItem, bagSlot, false);
+ #else
+diff --git a/playerbot/strategy/actions/GiveItemAction.cpp b/playerbot/strategy/actions/GiveItemAction.cpp
+index 64e0d73d..5930313e 100644
+--- a/playerbot/strategy/actions/GiveItemAction.cpp
++++ b/playerbot/strategy/actions/GiveItemAction.cpp
+@@ -34,7 +34,7 @@ bool GiveItemAction::Execute(Event& event)
+             continue;
+ 
+         ItemPosCountVec dest;
+-#ifdef MANGOSBOT_TWO
++#if defined(MANGOSBOT_ONE) || defined(MANGOSBOT_TWO)
+         uint8 bagSlot;
+         InventoryResult msg = receiver->CanStoreItem(NULL_BAG, NULL_SLOT, dest, item, bagSlot, false);
+ #else
+diff --git a/playerbot/strategy/actions/GuildShareItemAction.cpp b/playerbot/strategy/actions/GuildShareItemAction.cpp
+index 115c7435..ad072ae5 100644
+--- a/playerbot/strategy/actions/GuildShareItemAction.cpp
++++ b/playerbot/strategy/actions/GuildShareItemAction.cpp
+@@ -41,7 +41,7 @@ bool GuildShareItemAction::Execute(Event& event)
+         if (giveCount == stackCount)
+         {
+             ItemPosCountVec dest;
+-#ifdef MANGOSBOT_TWO
++#if defined(MANGOSBOT_ONE) || defined(MANGOSBOT_TWO)
+             uint8 bagSlot;
+             InventoryResult msg = receiver->CanStoreItem(NULL_BAG, NULL_SLOT, dest, item, bagSlot, false);
+ #else
+diff --git a/playerbot/strategy/tests/CommandSetup.cpp b/playerbot/strategy/tests/CommandSetup.cpp
+index a7cd0f6a..70941793 100644
+--- a/playerbot/strategy/tests/CommandSetup.cpp
++++ b/playerbot/strategy/tests/CommandSetup.cpp
+@@ -104,7 +104,7 @@ TestResult CommandSetupGiveItem::Execute(const std::string& params, Player* bot,
+         if (isBank)
+         {
+             ItemPosCountVec dest;
+-#ifdef MANGOSBOT_TWO
++#if defined(MANGOSBOT_ONE) || defined(MANGOSBOT_TWO)
+             uint8 bagSlot;
+             InventoryResult msg = bot->CanBankItem(NULL_BAG, NULL_SLOT, dest, pItem, false, bagSlot);
+ #else
